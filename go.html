@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .loading::after {
+        display: inline-block;
+        animation: dotty steps(1, end) 1s infinite;
+        content: '';
+    }
+
+    @keyframes dotty {
+        0% {
+            content: '';
+        }
+
+        33% {
+            content: '.';
+        }
+
+        66% {
+            content: '..';
+        }
+
+        100% {
+            content: '...';
+        }
+    }
+</style>
+
+<body>
+    <h1 style="text-align: center">Let me ask AI for you</h1>
+    <h2 style="text-align: center">You, master of minimal effort</h1>
+        <div style="text-align: center">
+            <span class="loading">Redirecting to ChatGPT</span>
+        </div>
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            const query = params.get('q');
+
+            if (!query) {
+                window.location.replace('/');
+            }
+
+            const chatGPTLink = `https://chatgpt.com/?q=${query}&hints=search&temporary-chat=true`;
+            setTimeout(() => {
+                window.location.replace(chatGPTLink);
+            }, 3000);
+
+        </script>
+</body>
+
+</html>
