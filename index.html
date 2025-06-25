@@ -21,13 +21,12 @@
         const query = input.value;
         const feedback = document.getElementById('feedback');
 
-        // Usa la Clipboard API se disponibile
         if (navigator.clipboard) {
           const sanitizedQuery = encodeURIComponent(query);
-          const chatGPTLink = `https://chatgpt.com/?q=${sanitizedQuery}&hints=search&temporary-chat=true`;
+          const link = window.location.origin + `/?q=${sanitizedQuery}`;
 
           navigator.clipboard
-            .writeText(chatGPTLink)
+            .writeText(link)
             .then(() => {
               console.log('Testo copiato negli appunti.');
               feedback.innerText = 'Link copied!';
@@ -35,11 +34,11 @@
             .catch((err) => {
               console.error('Errore nella copia:', err);
               feedback.innerText =
-                'Error while copying the link. Here it is: ' + chatGPTLink;
+                'Error while copying the link. Here it is: ' + link;
             });
         } else {
           feedback.innerText =
-            'Cannot copy your link. Here it is: ' + chatGPTLink;
+            'Cannot copy your link. Here it is: ' + link;
         }
       });
     </script>
