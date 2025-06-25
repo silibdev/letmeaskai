@@ -23,7 +23,7 @@
 
         if (navigator.clipboard) {
           const sanitizedQuery = encodeURIComponent(query);
-          const link = window.location.origin + `go/?q=${sanitizedQuery}`;
+          const link = window.location.origin + `/go/?q=${sanitizedQuery}`;
 
           navigator.clipboard
             .writeText(link)
