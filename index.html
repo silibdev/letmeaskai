@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1 style="text-align: center">Let me ask AI for you</h1>
+    <div style="text-align: center">
+      <input
+        style="width: 50dvw"
+        type="text"
+        id="query"
+        name="query"
+        placeholder="Search for..."
+      />
+      <br /><br />
+      <button id="create-link">Copy link to ChatGPT</button>
+      <br />
+      <span id="feedback"></span>
+    </div>
+    <script>
+      document.getElementById('create-link').addEventListener('click', () => {
+        const input = document.getElementById('query');
+        const query = input.value;
+        const feedback = document.getElementById('feedback');
+
+        // Usa la Clipboard API se disponibile
+        if (navigator.clipboard) {
+          const sanitizedQuery = encodeURIComponent(query);
+          const chatGPTLink = `https://chatgpt.com/?q=${sanitizedQuery}&hints=search&temporary-chat=true`;
+
+          navigator.clipboard
+            .writeText(chatGPTLink)
+            .then(() => {
+              console.log('Testo copiato negli appunti.');
+              feedback.innerText = 'Link copied!';
+            })
+            .catch((err) => {
+              console.error('Errore nella copia:', err);
+              feedback.innerText =
+                'Error while copying the link. Here it is: ' + chatGPTLink;
+            });
+        } else {
+          feedback.innerText =
+            'Cannot copy your link. Here it is: ' + chatGPTLink;
+        }
+      });
+    </script>
+  </body>
+</html>
