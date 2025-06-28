@@ -1,43 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+
+<style>
+    body, textarea {
+        background-color: white;
+        color: #070600;
+        border-color: #070600;
+    }
+
+    body, button, textarea {
+        font-family: "Lexend Deca", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .large {
+        font-size: large;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .rounded-corners {
+        border-radius: 0.5rem;
+    }
+
+    .title {
+        font-size: xxx-large;
+    }
+
+    .query {
+        width: min(71dvw, 50rem);
+        resize: vertical;
+        padding: 0.7rem;
+    }
+
+    .copy-button {
+        padding: 0.7rem;
+        color: white;
+        background-color: #6f83f5;
+        border: none;
+    }
+
+    .copy-button:hover {
+        background-color: #7c8ff5;
+        cursor: pointer;
+    }
+</style>
 <body>
-  <h1 style="text-align: center">Let me ask AI for you</h1>
-  <div style="text-align: center">
-    <input style="width: min(71dvw, 50rem);" type="text" id="query" name="query" placeholder="Search for..." />
-    <br /><br />
-    <button id="create-link">Copy link to ChatGPT</button>
-    <br />
-    <span id="feedback"></span>
-  </div>
-  <script>
-    document.getElementById('create-link').addEventListener('click', () => {
-      const input = document.getElementById('query');
-      const query = input.value;
-      const feedback = document.getElementById('feedback');
+<h1 class="center title">Let me ask AI for you</h1>
+<div class="center">
+  <label class="hidden" for="query">Search for...</label>
+  <textarea class="query large rounded-corners" id="query" name="query" placeholder="Search for..."></textarea>
+  <br/><br/>
+  <button class="large copy-button rounded-corners" id="create-link">Copy link to ChatGPT</button>
+  <br/><br/>
+  <span class="large" id="feedback"></span>
+</div>
+<script>
+  document.getElementById('create-link').addEventListener('click', () => {
+    const input = document.getElementById('query');
+    const query = input.value;
+    const feedback = document.getElementById('feedback');
+    const sanitizedQuery = encodeURIComponent(query);
+    const link = window.location.origin + `/go/?q=${sanitizedQuery}`;
 
-      if (navigator.clipboard) {
-        const sanitizedQuery = encodeURIComponent(query);
-        const link = window.location.origin + `/go/?q=${sanitizedQuery}`;
+    if (!sanitizedQuery) {
+      return;
+    }
 
-        navigator.clipboard
-          .writeText(link)
-          .then(() => {
-            console.log('Testo copiato negli appunti.');
-            feedback.innerText = 'Link copied!';
-          })
-          .catch((err) => {
-            console.error('Errore nella copia:', err);
-            feedback.innerText =
-              'Error while copying the link. Here it is: ' + link;
-          });
-      } else {
-        feedback.innerText =
-          'Cannot copy your link. Here it is: ' + link;
-      }
-    });
-  </script>
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(link)
+        .then(() => {
+          feedback.innerText = 'Link copied!';
+        })
+        .catch((err) => {
+          console.error('Error while copying:', err);
+          feedback.innerText = 'Error while copying the link. Here it is: ' + link;
+        });
+    } else {
+      feedback.innerText = 'Cannot copy your link. Here it is: ' + link;
+    }
+  });
+</script>
 </body>
 
 </html>

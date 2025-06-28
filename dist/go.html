@@ -1,52 +1,77 @@
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+
 <style>
-  .loading::after {
-    display: inline-block;
-    animation: dotty steps(1, end) 1s infinite;
-    content: '';
-  }
-
-  @keyframes dotty {
-    0% {
-      content: '';
+    body, textarea {
+        background-color: white;
+        color: #070600;
+        border-color: #070600;
     }
 
-    33% {
-      content: '.';
+    body, button, textarea {
+        font-family: "Lexend Deca", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
     }
 
-    66% {
-      content: '..';
+    .center {
+        text-align: center;
     }
 
-    100% {
-      content: '...';
+    .title {
+        font-size: xxx-large;
     }
-  }
+
+    .subtitle {
+        font-size: x-large;
+    }
+
+    .loader {
+        margin-top: 1rem;
+        width: 90px;
+        height: 14px;
+        color: #000;
+        margin-inline: auto;
+        transform: rotate(180deg);
+        background: linear-gradient(90deg, currentColor 50%, #0000 0) repeat-x,
+        conic-gradient(from 45deg at right 7px top 50%, currentColor 90deg, #0000 0);
+        background-position: calc(100% / 3) 50%;
+        background-size: calc(100% / 4) 60%, calc(100% / 4) 100%;
+        animation: l7 0.5s infinite linear;
+    }
+
+    @keyframes l7 {
+        100% {
+            background-position: 0 50%
+        }
+    }
 </style>
-
 <body>
-  <h1 style="text-align: center">Let me ask AI for you</h1>
-  <h2 style="text-align: center">You, master of minimal effort</h1>
-    <div style="text-align: center">
-      <span class="loading">Redirecting to ChatGPT</span>
-    </div>
-    <script>
-      const params = new URLSearchParams(window.location.search);
-      const query = params.get('q');
+<h1 class="center title">Someone asked AI for you</h1>
+<h2 class="center subtitle">You, master of minimal effort</h2>
+<div style="text-align: center">
+  <span class="loading">Redirecting to ChatGPT</span>
+  <div class="loader"></div>
+</div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get('q');
 
-      if (!query) {
-        window.location.replace('/');
-      }
+  if (!query) {
+    window.location.replace('/');
+  }
 
-      const chatGPTLink = `https://chatgpt.com/?q=${query}&hints=search&temporary-chat=true`;
-      setTimeout(() => {
-        window.location.replace(chatGPTLink);
-      }, 3000);
+  const chatGPTLink = `https://chatgpt.com/?q=${query}&hints=search&temporary-chat=true`;
+  setTimeout(() => {
+    window.location.replace(chatGPTLink);
+  }, 3000);
 
-    </script>
+</script>
 </body>
 
 </html>
